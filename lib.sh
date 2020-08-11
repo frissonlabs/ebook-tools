@@ -317,11 +317,11 @@ command_exists() {
 # which no file is present.
 unique_filename() {
 	local new_path="$1/$2" counter=0
-	while [[ -e "$new_path" ]]; do
-		counter="$((counter+1))"
-		decho "File '$new_path' already exists in destination '$1', trying with counter $counter!"
-		new_path="${1}/${2%.*} ($counter).${2##*.}"
-	done
+	# while [[ -e "$new_path" ]]; do
+	# 	counter="$((counter+1))"
+	# 	decho "File '$new_path' already exists in destination '$1', trying with counter $counter!"
+	# 	new_path="${1}/${2%.*} ($counter).${2##*.}"
+	# done
 	echo "$new_path"
 }
 
@@ -684,6 +684,7 @@ move_or_link_ebook_file_and_metadata() {
 
 	local new_path
 	new_path="$(unique_filename "${new_folder%/}" "$new_name")"
+	basename=$(echo "$new_path" | cut -f 1 -d '.')
 	echo -n "$new_path"
 
 	move_or_link_file "$current_ebook_path" "$new_path"
@@ -692,9 +693,9 @@ move_or_link_ebook_file_and_metadata() {
 		decho "Removing metadata file '$current_metadata_path'..."
 		rm "$current_metadata_path"
 	else
-		decho "Moving metadata file '$current_metadata_path' to '${new_path}.${OUTPUT_METADATA_EXTENSION}'..."
+		decho "Moving metadata file '$current_metadata_path' to '${basename}.${OUTPUT_METADATA_EXTENSION}'..."
 		if [[ "$DRY_RUN" != true ]]; then
-			mv --no-clobber "$current_metadata_path" "${new_path}.${OUTPUT_METADATA_EXTENSION}"
+			mv "$current_metadata_path" "${basename}.${OUTPUT_METADATA_EXTENSION}"
 		else
 			rm "$current_metadata_path"
 		fi

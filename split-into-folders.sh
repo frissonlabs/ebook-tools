@@ -52,8 +52,8 @@ find "$@" -type f ! -name "*.${OUTPUT_METADATA_EXTENSION}" | sort ${FILE_SORT_FL
 		echo "$chunk" | while IFS= read -r file_to_move || [[ -n "$file_to_move" ]] ; do
 			decho "Moving file '$file_to_move' to '$OUTPUT_FOLDER/$current_folder/' and the meta file to '$OUTPUT_FOLDER/$current_folder.${OUTPUT_METADATA_EXTENSION}/'"
 			if [[ "$DRY_RUN" == "false" ]]; then
-				mv --no-clobber "$file_to_move" "$OUTPUT_FOLDER/$current_folder/"
-				mv --no-clobber \
+				mv "$file_to_move" "$OUTPUT_FOLDER/$current_folder/"
+				mv \
 					"$file_to_move.${OUTPUT_METADATA_EXTENSION}" \
 					"$OUTPUT_FOLDER/$current_folder.${OUTPUT_METADATA_EXTENSION}/"
 			fi
