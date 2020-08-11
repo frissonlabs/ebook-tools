@@ -1,6 +1,8 @@
 # TL;DR
 
-`docker run -u 0 -it -v D:\Unorganized/:/unorganized-books -v D:\Organized/:/organized-books ebooktools/scripts:latest`
+```
+docker run -u 0 -it -v D:\Unorganized/:/unorganized-books -v D:\Organized/:/organized-books ebooktools/scripts:latest
+```
 
 ```
 /ebook-tools/organize-ebooks.sh -v -o=/organized-books/converted -owi \
